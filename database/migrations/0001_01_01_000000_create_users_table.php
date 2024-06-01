@@ -40,6 +40,7 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('type', 2)->default('PF');
             $table->string('account', 6)->unique();
             $table->string('digit', 6);
             $table->decimal('balance', 10, 2)->default(0);

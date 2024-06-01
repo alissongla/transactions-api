@@ -23,12 +23,14 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $isCpf = random_int(0, 1);
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'document' => $isCpf ? fake()->unique()->cpf(false) : fake()->unique()->cnpj(false)
         ];
     }
 
