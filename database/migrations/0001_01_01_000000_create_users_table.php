@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('document', 14)->unique();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,6 +36,16 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        Schema::create('accounts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('account', 6)->unique();
+            $table->string('digit', 6);
+            $table->decimal('balance', 10, 2)->default(0);
+            $table->dateTime('last_transaction')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -42,6 +53,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('accounts');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
