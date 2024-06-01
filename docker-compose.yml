@@ -29,14 +29,16 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE:-transactions}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-root}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+        - MYSQL_DATABASE=laravel_bank
+        - MYSQL_ROOT_PASSWORD=root
     ports:
-        - "3306:3306"
+        - "3308:3306"
+        - "33068:33060"
     volumes:
       - ./.docker/data:/var/lib/mysql
       - ./.docker/mysql:/docker-entrypoint-initdb.d
+    networks:
+        - api-transactions-network
 
 
   redis:
