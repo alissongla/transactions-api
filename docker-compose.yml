@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - redis
+    networks:
+      - api-transactions-network
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "8890:80"
+    volumes:
+      - ./:/var/www
+      - ./.docker/nginx/:/etc/nginx/conf.d/
+    networks:
+      - api-transactions-network
+
+  db:
+    image: mysql:lts
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-transactions}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+    ports:
+        - "3306:3306"
+    volumes:
+      - ./.docker/data:/var/lib/mysql
+
+
+  redis:
+    image: redis:latest
+    networks:
+      - api-transactions-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - api-transactions-network
+
+networks:
+  api-transactions-network:
+    driver: bridge
