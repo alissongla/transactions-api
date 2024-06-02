@@ -18,6 +18,15 @@ class TransactionService
     {
     }
 
+    /**
+     * Creates a transaction between two users.
+     *
+     * @param int $payerUserId
+     * @param int $payeeUserID
+     * @param float $value
+     *
+     * @return mixed Returns the transaction if successful, or a JSON response with an error message if unsuccessful.
+     */
     public function createTransaction($payerUserId, $payeeUserID, $value)
     {
         if ($payerUserId === $payeeUserID) {
