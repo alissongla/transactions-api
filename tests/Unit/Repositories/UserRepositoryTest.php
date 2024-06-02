@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\Unit\Repositories\User;
+namespace Tests\Unit\Repositories;
 
 use App\Http\Repositories\User\UserRepository;
 use App\Models\User;
