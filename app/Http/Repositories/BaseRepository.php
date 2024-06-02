@@ -20,7 +20,7 @@ class BaseRepository
 
     public function findByCustomColumn($id, $column)
     {
-        return $this->model->where($column, $id);
+        return $this->model->where($column, $id)->first();
     }
 
     public function update($id, $data)
@@ -31,5 +31,10 @@ class BaseRepository
     public function all()
     {
         return $this->model->all();
+    }
+
+    public function delete($id)
+    {
+        return $this->model->find($id)->delete();
     }
 }
