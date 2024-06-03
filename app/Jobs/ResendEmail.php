@@ -37,10 +37,4 @@ class ResendEmail implements ShouldQueue
             $this->release(60);
         }
     }
-
-    public function failed(\Exception $exception): void
-    {
-        ResendEmail::dispatch($this->emailData);
-        Log::error('Failed to send email in job: ' . $exception->getMessage());
-    }
 }
