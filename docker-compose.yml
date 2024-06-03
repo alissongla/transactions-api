@@ -54,6 +54,14 @@ services:
     networks:
       - api-transactions-network
 
+  smtp:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - api-transactions-network
+
 networks:
   api-transactions-network:
     driver: bridge
