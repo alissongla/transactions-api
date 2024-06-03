@@ -64,6 +64,38 @@ class TransactionService
         return $transaction;
     }
 
+    public function deleteTransaction($transactionId)
+    {
+        $transaction = $this->transactionRepository->find($transactionId);
+        if (!$transaction) {
+            return $this->responseError('Transaction not found');
+        }
+
+        $payer = $this->accountRepository->findByCustomColumn($transaction->payer_user_id, self::USER_ID_FIELD);
+        $payee = $this->accountRepository->findByCustomColumn($transaction->payee_user_id, self::USER_ID_FIELD);
+
+        $this->accountRepository->reverseBalance($payer, $payee, $transaction->value);
+        $this->transactionRepository->delete($transactionId);
+
+        return response()->json(['message' => 'Transaction deleted'], 200);
+    }
+
+    public function restoreTransaction($transactionId)
+    {
+        $transaction = $this->transactionRepository->findTrashed($transactionId);
+        if (!$transaction) {
+            return $this->responseError('Transaction not found');
+        }
+
+        $payer = $this->accountRepository->findByCustomColumn($transaction->payer_user_id, self::USER_ID_FIELD);
+        $payee = $this->accountRepository->findByCustomColumn($transaction->payee_user_id, self::USER_ID_FIELD);
+
+        $this->accountRepository->updateBalance($payer, $payee, $transaction->value);
+        $this->transactionRepository->restore($transactionId);
+
+        return response()->json(['message' => 'Transaction restored'], 200);
+    }
+
     private function responseError($message) {
         return response()->json(['message' => $message], 400);
     }

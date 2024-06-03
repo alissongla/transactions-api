@@ -27,4 +27,22 @@ class TransactionController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            return $this->transactionService->deleteTransaction($id);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            return $this->transactionService->restoreTransaction($id);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
 }

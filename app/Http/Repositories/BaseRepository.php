@@ -37,4 +37,19 @@ class BaseRepository
     {
         return $this->model->find($modelId)->delete();
     }
+
+    public function restore($modelId)
+    {
+        $model = $this->model->withTrashed()->find($modelId);
+        if ($model) {
+            $model->restore();
+            return $model;
+        }
+        return null;
+    }
+
+    public function findTrashed($modelId)
+    {
+        return $this->model->withTrashed()->find($modelId);
+    }
 }
