@@ -28,19 +28,19 @@ class TransactionController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($transactionId)
     {
         try {
-            return $this->transactionService->deleteTransaction($id);
+            return $this->transactionService->deleteTransaction($transactionId);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 
-    public function restore($id)
+    public function restore($transactionId)
     {
         try {
-            return $this->transactionService->restoreTransaction($id);
+            return $this->transactionService->restoreTransaction($transactionId);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }
