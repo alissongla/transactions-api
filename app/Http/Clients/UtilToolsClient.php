@@ -28,8 +28,14 @@ class UtilToolsClient extends Client
 
     public function getNotifyServiceStatus()
     {
-        $notify = $this->get('v1/notify');
+        try {
+            $this->post('v1/notify');
 
-        return json_decode($notify->getBody()->getContents(), true);
+            return true;
+        } catch (\Exception $e) {
+
+            return false;
+        }
+
     }
 }

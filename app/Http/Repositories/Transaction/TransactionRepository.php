@@ -15,20 +15,36 @@ class TransactionRepository extends BaseRepository
     public function createTransaction($payer, $payee, $value)
     {
         return $this->create([
-            'payer_user_id' => $payer->id,
-            'payee_user_id' => $payee->id,
+            'payer_user_id' => $payer->user_id,
+            'payee_user_id' => $payee->user_id,
             'value' => $value
         ]);
     }
 
-    public function restoreTransaction($id)
+    public function restoreTransaction($transactionId)
     {
-        $deletedTransaction = $this->model->withTrashed()->find($id);
+        $deletedTransaction = $this->model->withTrashed()->find($transactionId);
         if ($deletedTransaction) {
             $deletedTransaction->restore();
             return $deletedTransaction;
         }
 
         return null;
+    }
+
+    public function deleteTransaction($transactionId)
+    {
+        $deletedTransaction = $this->model->find($transactionId);
+        if ($deletedTransaction) {
+            $deletedTransaction->delete();
+            return $deletedTransaction;
+        }
+
+        return null;
+    }
+
+    public function getTransaction($transactionId)
+    {
+        return $this->model->with('payer', 'payee')->find($transactionId);
     }
 }

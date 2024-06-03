@@ -29,9 +29,9 @@ class UserRepository extends BaseRepository
         })->first();
     }
 
-    public function findUserWithAccount($id)
+    public function findUserWithAccount($userId)
     {
-        return $this->model->with('account')->find($id);
+        return $this->model->with('account')->find($userId);
     }
 
 }

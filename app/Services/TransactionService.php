@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Http\Clients\UtilToolsClient;
 use App\Http\Repositories\Transaction\TransactionRepository;
 use App\Http\Repositories\User\AccountRepository;
-use App\Http\Repositories\User\UserRepository;
+use App\Jobs\SendSuccessfulTransactionEmail;
 
 class TransactionService
 {
@@ -59,6 +59,8 @@ class TransactionService
         }
         $this->accountRepository->updateBalance($payer, $payee, $value);
 
+        $mailJob = new SendSuccessfulTransactionEmail($transaction->id);
+        dispatch($mailJob);
         return $transaction;
     }
 

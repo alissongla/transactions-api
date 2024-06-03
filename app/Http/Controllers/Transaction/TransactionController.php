@@ -21,8 +21,10 @@ class TransactionController extends Controller
      */
     public function store(StoreTransactionRequest $request)
     {
-        $this->transactionService->createTransaction($request->payer, $request->payee, $request->value);
-
-        return response()->json(['message' => 'Transaction completed'], 200);
+        try {
+            return $this->transactionService->createTransaction($request->payer, $request->payee, $request->value);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 }

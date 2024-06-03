@@ -13,19 +13,19 @@ class BaseRepository
         return $this->model->create($data);
     }
 
-    public function find($id)
+    public function find($modelId)
     {
-        return $this->model->find($id);
+        return $this->model->find($modelId);
     }
 
-    public function findByCustomColumn($id, $column)
+    public function findByCustomColumn($modelId, $column)
     {
-        return $this->model->where($column, $id)->first();
+        return $this->model->where($column, $modelId)->first();
     }
 
-    public function update($id, $data)
+    public function update($modelId, $data)
     {
-        return $this->model->find($id)->update($data);
+        return $this->model->find($modelId)->update($data);
     }
 
     public function all()
@@ -33,8 +33,8 @@ class BaseRepository
         return $this->model->all();
     }
 
-    public function delete($id)
+    public function delete($modelId)
     {
-        return $this->model->find($id)->delete();
+        return $this->model->find($modelId)->delete();
     }
 }

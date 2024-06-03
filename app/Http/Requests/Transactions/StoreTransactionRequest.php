@@ -3,7 +3,9 @@
 namespace App\Http\Requests\Transactions;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreTransactionRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class StoreTransactionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -45,5 +47,10 @@ class StoreTransactionRequest extends FormRequest
             'value.numeric' => 'The value must be a number.',
             'value.min' => 'The value must be at least 0.01.',
         ];
+    }
+
+    public function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json($validator->errors(), 400));
     }
 }
