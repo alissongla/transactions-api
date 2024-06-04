@@ -1,66 +1,153 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Bank
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+O projeto em questão é uma versão simplificada das transações de um banco digital.
 
-## About Laravel
+## Sumário
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. [Requisitos](#requisitos)
+2. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+3. [Arquitetura](#arquitetura)
+4. [Como Executar](#como-executar)
+5. [Documentação API](#documentação-api)
+6. [Testes](#testes)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Requisitos
 
-## Learning Laravel
+Eu como fundador do banco, gostaria de ter um sistema que me permita realizar transações financeiras entre contas de clientes.
+Esta transação deve ter os seguintes requisitos:
+- Deve ter dois tipos de perfil: Cliente e Lojista.
+- O Logista deve somente receber transações.
+- O Cliente pode pagar e receber transações.
+- O saldo do cliente não pode ser menor que o valor da transação.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+E como requisitos não funcionais:
+- O sistema pode ser desenvolvido em linguagem ou framework de sua escolha.
+- O sistema deve ser executado em container Docker.
+- O sistema deve ter uma documentação de como executar o projeto.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Tecnologias Utilizadas
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Laravel 11
+- MySQL
+- Redis
+- PHP 8.3
+- Nginx
+- Docker
 
-## Laravel Sponsors
+## Arquitetura
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+ - A arquitetura do projeto foi desenvolvida com base no padrão Service Repository, onde cada camada tem sua responsabilidade bem definida.
+ - Diagrama de classes:
+![classe_transacao_light](https://github.com/alissongla/transactions-api/assets/39539326/0aa7419b-e3a4-4cef-acab-10b9069dd2a2)
+ - Fluxograma: 
+![fluxograma_transacao_light](https://github.com/alissongla/transactions-api/assets/39539326/96971c4a-9be9-42c5-8fda-32b5320f157d)
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+## Como Executar
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Clone o repositório
 
-## Code of Conduct
+```
+git clone https://github.com/alissongla/transactions-api.git
+```
+- Entre na pasta do projeto e copie o arquivo .env.example para .env
+```
+cd transactions-api && cp .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Atualize as variáveis de ambiente no arquivo .env
 
-## Security Vulnerabilities
+``` 
+APP_NAME=Laravel Bank
+http://localhost:8890
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+APP_LOCALE=pt_BR
+APP_FALLBACK_LOCALE=pt_BR
+APP_FAKER_LOCALE=pt_BR
 
-## License
+DB_CONNECTION=mysql
+DB_HOST=db #nome do container do banco de dados
+DB_PORT=3306
+DB_DATABASE=laravel_bank
+DB_USERNAME=root
+DB_PASSWORD=root
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+CACHE_DRIVER=redis
+QUEUE_CONNECTION=redis
+SESSION_DRIVER=redis
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=redis
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp #nome do container do servidor de email
+MAIL_PORT=1025
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+UTIL_TOOLS_API_URL="https://util.devi.tools/api/"
+```
+
+- Suba os containers do projeto
+
+```
+docker-compose up -d
+```
+
+- Acessar o container
+
+```
+docker-compose exec app bash
+```
+
+- Instalar as dependências do projeto
+
+```
+composer install
+```
+
+- Gerar a key do projeto Laravel
+
+```
+php artisan key:generate
+```
+
+- Criar tabelas no banco de dados e popular com dados fake
+
+```
+php artisan migrate && php artisan db:seed
+```
+
+- Acessar o projeto http://localhost:8890
+
+## Documentação API
+
+### Requisições
+
+| Rota                    | Método |Descrição
+|-------------------------|--------|---
+| `/api/transaction`      | POST   | Cria uma nova transação
+| `/api/transaction/{id}` | DELETE | Deleta uma transação
+| `/api/transaction/restore/{id}`                 | POST   | Restaura uma transação deletada
+
+### Respostas
+
+| Código | Descrição
+|---|---
+| `200` | Requisição executada com sucesso (success).
+| `400` | Erros de validação ou os campos informados não existem no sistema.
+| `404` | Registro pesquisado não encontrado (Not found).
+
+## Testes
+Para executar os testes do projeto, basta rodar o comando abaixo:
+
+```
+php artisan test
+```
