@@ -7,8 +7,10 @@ use App\Http\Clients\UtilToolsClient;
 use App\Http\Repositories\Transaction\TransactionRepository;
 use App\Http\Repositories\User\AccountRepository;
 use App\Models\Account;
+use App\Models\Transaction;
 use App\Services\TransactionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\JsonResponse;
 use Tests\TestCase;
 
 class TransactionServiceTest extends TestCase
@@ -34,7 +36,8 @@ class TransactionServiceTest extends TestCase
         $payer = Account::factory()->create(['balance' => 200, 'type' => 'PF']);
         $payee = Account::factory()->create();
         $transaction = $this->transactionService->createTransaction($payer->user_id, $payee->user_id, 100);
-
+        $transaction = json_decode($transaction->getContent());
+        $transaction = $transaction->transaction;
         $this->assertEquals($payer->user_id, $transaction->payer_user_id);
         $this->assertEquals($payee->user_id, $transaction->payee_user_id);
         $this->assertEquals(100, $transaction->value);
@@ -93,5 +96,23 @@ class TransactionServiceTest extends TestCase
 
         $this->assertEquals(400, $response->status());
         $this->assertEquals('{"message":"Error on authorization"}', $response->getContent());
+    }
+
+    public function testShouldDeleteTransactionSuccessfully()
+    {
+        $transaction = Transaction::factory()->create();
+        $response = $this->transactionService->deleteTransaction($transaction->id);
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testShouldDeleteTransactionWithNonExistentId()
+    {
+        $transactionId = 9999;
+        $response = $this->transactionService->deleteTransaction($transactionId);
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(400, $response->getStatusCode());
     }
 }

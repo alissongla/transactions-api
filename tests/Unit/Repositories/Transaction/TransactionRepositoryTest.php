@@ -3,8 +3,8 @@
 namespace Tests\Unit\Repositories\Transaction;
 
 use App\Http\Repositories\Transaction\TransactionRepository;
+use App\Models\Account;
 use App\Models\Transaction;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -22,8 +22,8 @@ class TransactionRepositoryTest extends TestCase
 
     public function testCreateTransactionCreatesTransaction()
     {
-        $payer = User::factory()->create();
-        $payee = User::factory()->create();
+        $payer = Account::factory()->create(['balance' => 200]);
+        $payee = Account::factory()->create();
         $transaction = $this->transactionRepository->createTransaction($payer, $payee, 100);
         $this->assertEquals($payer->id, $transaction->payer_user_id);
         $this->assertEquals($payee->id, $transaction->payee_user_id);

@@ -28,6 +28,14 @@ class TransactionController extends Controller
         }
     }
 
+    /**
+     * Handles the request to delete a transaction.
+     *
+     * @param int $transactionId
+     * @return JsonResponse
+     * If an error occurs during the deletion, a JSON response with a status code of 400 and an error message is returned.
+     * @throws \Exception If the transaction cannot be deleted, an exception is thrown.
+     */
     public function destroy($transactionId)
     {
         try {
@@ -37,6 +45,14 @@ class TransactionController extends Controller
         }
     }
 
+    /**
+     * Handles the request to restore a transaction.
+     *
+     * @param int $transactionId
+     * @return JsonResponse
+     * If an error occurs during the restoration, a JSON response with a status code of 400 and an error message is returned.
+     * @throws \Exception If the transaction cannot be restored, an exception is thrown.
+     */
     public function restore($transactionId)
     {
         try {

@@ -61,9 +61,16 @@ class TransactionService
 
         $mailJob = new SendSuccessfulTransactionEmail($transaction->id);
         dispatch($mailJob);
-        return $transaction;
+        return response()->json(['message' => 'Transaction completed', 'transaction' => $transaction], 200);
     }
 
+    /**
+     * Deletes a transaction.
+     *
+     * @param int $transactionId
+     * @return JsonResponse
+     * If the transaction does not exist, a JSON response with a status code of 400 and an error message is returned.
+     */
     public function deleteTransaction($transactionId)
     {
         $transaction = $this->transactionRepository->find($transactionId);
@@ -80,6 +87,13 @@ class TransactionService
         return response()->json(['message' => 'Transaction deleted'], 200);
     }
 
+    /**
+     * Restores a previously deleted transaction.
+     *
+     * @param int $transactionId
+     * @return JsonResponse
+     * If the transaction does not exist, a JSON response with a status code of 400 and an error message is returned.
+     */
     public function restoreTransaction($transactionId)
     {
         $transaction = $this->transactionRepository->findTrashed($transactionId);
