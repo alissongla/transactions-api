@@ -1,0 +1,162 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel Bank",
+        "contact": {
+
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8890/api",
+            "variables": {
+
+            }
+        }
+    ],
+    "paths": {
+        "/transaction": {
+            "post": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Create",
+                "operationId": "Create",
+                "parameters": [],
+                "requestBody": {
+                    "description": "",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/CreateRequest"
+                                    },
+                                    {
+                                        "example": {
+                                            "value": 1,
+                                            "payer": 18,
+                                            "payee": 14
+                                        }
+                                    }
+                                ]
+                            },
+                            "example": {
+                                "value": 1,
+                                "payer": 18,
+                                "payee": 14
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "headers": {
+
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/transaction/{id}": {
+            "delete": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Delete",
+                "operationId": "Delete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "headers": {
+
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        },
+        "/transaction/restore/{id}": {
+            "post": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Restore",
+                "operationId": "Restore",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "style": "simple",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "headers": {
+
+                        }
+                    }
+                },
+                "deprecated": false
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreateRequest": {
+                "title": "CreateRequest",
+                "required": [
+                    "value",
+                    "payer",
+                    "payee"
+                ],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "number"
+                    },
+                    "payer": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "payee": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "example": {
+                    "value": 1,
+                    "payer": 18,
+                    "payee": 14
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Transaction"
+        }
+    ]
+}
