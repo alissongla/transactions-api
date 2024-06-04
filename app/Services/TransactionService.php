@@ -6,6 +6,7 @@ use App\Http\Clients\UtilToolsClient;
 use App\Http\Repositories\Transaction\TransactionRepository;
 use App\Http\Repositories\User\AccountRepository;
 use App\Jobs\SendSuccessfulTransactionEmail;
+use Illuminate\Http\JsonResponse;
 
 class TransactionService
 {
