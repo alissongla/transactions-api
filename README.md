@@ -39,8 +39,11 @@ E como requisitos não funcionais:
 
  - A arquitetura do projeto foi desenvolvida com base no padrão Service Repository, onde cada camada tem sua responsabilidade bem definida.
  - Diagrama de classes:
+   
 ![classe_transacao_light](https://github.com/alissongla/transactions-api/assets/39539326/0aa7419b-e3a4-4cef-acab-10b9069dd2a2)
- - Fluxograma: 
+
+ - Fluxograma:
+   
 ![fluxograma_transacao_light](https://github.com/alissongla/transactions-api/assets/39539326/96971c4a-9be9-42c5-8fda-32b5320f157d)
 
 
