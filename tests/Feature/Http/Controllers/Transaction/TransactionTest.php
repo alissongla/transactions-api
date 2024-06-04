@@ -5,10 +5,10 @@ namespace Tests\Feature;
 use App\Http\Clients\UtilToolsClient;
 use App\Models\Account;
 use App\Models\Transaction;
-use Tests\TestCase;
 use App\Services\TransactionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
+use Tests\TestCase;
 
 class StoreTransactionTest extends TestCase
 {
@@ -26,9 +26,8 @@ class StoreTransactionTest extends TestCase
         $requestData = [
             'payer' => $payer->user_id,
             'payee' => $payee->user_id,
-            'value' => 100.00
+            'value' => 100.00,
         ];
-
 
         $response = $this->postJson('/api/transaction', $requestData);
 
@@ -48,13 +47,13 @@ class StoreTransactionTest extends TestCase
         $requestData = [
             'payer' => $payer->user_id,
             'payee' => $payee->user_id,
-            'value' => 100.00
+            'value' => 100.00,
         ];
 
         $response = $this->postJson('/api/transaction', $requestData);
 
         $response->assertStatus(400)
-            ->assertJson(["message" => "Error on authorization"]);
+            ->assertJson(['message' => 'Error on authorization']);
     }
 
     public function testShouldStoreTransactionFailure()
@@ -68,13 +67,13 @@ class StoreTransactionTest extends TestCase
         $requestData = [
             'payer' => 1,
             'payee' => 2,
-            'value' => 100.00
+            'value' => 100.00,
         ];
 
         $response = $this->postJson('/api/transaction', $requestData);
 
         $response->assertStatus(400)
-            ->assertJson(["payer" => ["The selected payer is invalid."]]);
+            ->assertJson(['payer' => ['The selected payer is invalid.']]);
     }
 
     public function testShouldDeleteTransactionSuccess()
@@ -83,7 +82,7 @@ class StoreTransactionTest extends TestCase
         $response = $this->deleteJson("/api/transaction/{$transaction->id}");
 
         $response->assertStatus(200)
-            ->assertJson(["message" => "Transaction deleted"]);
+            ->assertJson(['message' => 'Transaction deleted']);
     }
 
     public function testShouldDeleteTransactionFailure()
@@ -97,7 +96,7 @@ class StoreTransactionTest extends TestCase
         $response = $this->deleteJson('/api/transaction/1');
 
         $response->assertStatus(400)
-            ->assertJson(["message" => "Transaction failed"]);
+            ->assertJson(['message' => 'Transaction failed']);
     }
 
     public function testShouldRestoreTransactionSuccess()
@@ -106,7 +105,7 @@ class StoreTransactionTest extends TestCase
         $response = $this->postJson("/api/transaction/restore/{$transaction->id}");
 
         $response->assertStatus(200)
-            ->assertJson(["message" => "Transaction restored"]);
+            ->assertJson(['message' => 'Transaction restored']);
     }
 
     protected function tearDown(): void

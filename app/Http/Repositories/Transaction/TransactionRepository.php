@@ -17,7 +17,7 @@ class TransactionRepository extends BaseRepository
         return $this->create([
             'payer_user_id' => $payer->user_id,
             'payee_user_id' => $payee->user_id,
-            'value' => $value
+            'value' => $value,
         ]);
     }
 
@@ -26,6 +26,7 @@ class TransactionRepository extends BaseRepository
         $deletedTransaction = $this->model->withTrashed()->find($transactionId);
         if ($deletedTransaction) {
             $deletedTransaction->restore();
+
             return $deletedTransaction;
         }
 
@@ -37,6 +38,7 @@ class TransactionRepository extends BaseRepository
         $deletedTransaction = $this->model->find($transactionId);
         if ($deletedTransaction) {
             $deletedTransaction->delete();
+
             return $deletedTransaction;
         }
 

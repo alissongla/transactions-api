@@ -10,21 +10,20 @@ use App\Jobs\SendSuccessfulTransactionEmail;
 class TransactionService
 {
     const USER_ID_FIELD = 'user_id';
+
     public function __construct(
         public readonly AccountRepository $accountRepository,
         public readonly TransactionRepository $transactionRepository,
         public readonly UtilToolsClient $utilToolsClient
-    )
-    {
+    ) {
     }
 
     /**
      * Creates a transaction between two users.
      *
-     * @param int $payerUserId
-     * @param int $payeeUserID
-     * @param float $value
-     *
+     * @param  int  $payerUserId
+     * @param  int  $payeeUserID
+     * @param  float  $value
      * @return mixed Returns the transaction if successful, or a JSON response with an error message if unsuccessful.
      */
     public function createTransaction($payerUserId, $payeeUserID, $value)
@@ -36,11 +35,11 @@ class TransactionService
         $payer = $this->accountRepository->findByCustomColumn($payerUserId, self::USER_ID_FIELD);
         $payee = $this->accountRepository->findByCustomColumn($payeeUserID, self::USER_ID_FIELD);
 
-        if (!$payer || !$payee) {
+        if (! $payer || ! $payee) {
             return $this->responseError('User not found');
         }
 
-        if($payer->type === 'PJ'){
+        if ($payer->type === 'PJ') {
             return $this->responseError('Shopkeeper cannot make transactions');
         }
 
@@ -49,32 +48,33 @@ class TransactionService
         }
 
         $authorization = $this->utilToolsClient->getAuthorization();
-        if(!$authorization) {
+        if (! $authorization) {
             return $this->responseError('Error on authorization');
         }
 
         $transaction = $this->transactionRepository->createTransaction($payer, $payee, $value);
-        if (!$transaction) {
+        if (! $transaction) {
             return $this->responseError('Error on transaction');
         }
         $this->accountRepository->updateBalance($payer, $payee, $value);
 
         $mailJob = new SendSuccessfulTransactionEmail($transaction->id);
         dispatch($mailJob);
+
         return response()->json(['message' => 'Transaction completed', 'transaction' => $transaction], 200);
     }
 
     /**
      * Deletes a transaction.
      *
-     * @param int $transactionId
+     * @param  int  $transactionId
      * @return JsonResponse
-     * If the transaction does not exist, a JSON response with a status code of 400 and an error message is returned.
+     *                      If the transaction does not exist, a JSON response with a status code of 400 and an error message is returned.
      */
     public function deleteTransaction($transactionId)
     {
         $transaction = $this->transactionRepository->find($transactionId);
-        if (!$transaction) {
+        if (! $transaction) {
             return $this->responseError('Transaction not found');
         }
 
@@ -90,14 +90,14 @@ class TransactionService
     /**
      * Restores a previously deleted transaction.
      *
-     * @param int $transactionId
+     * @param  int  $transactionId
      * @return JsonResponse
-     * If the transaction does not exist, a JSON response with a status code of 400 and an error message is returned.
+     *                      If the transaction does not exist, a JSON response with a status code of 400 and an error message is returned.
      */
     public function restoreTransaction($transactionId)
     {
         $transaction = $this->transactionRepository->findTrashed($transactionId);
-        if (!$transaction) {
+        if (! $transaction) {
             return $this->responseError('Transaction not found');
         }
 
@@ -110,7 +110,8 @@ class TransactionService
         return response()->json(['message' => 'Transaction restored'], 200);
     }
 
-    private function responseError($message) {
+    private function responseError($message)
+    {
         return response()->json(['message' => $message], 400);
     }
 }

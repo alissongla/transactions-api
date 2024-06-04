@@ -43,8 +43,10 @@ class BaseRepository
         $model = $this->model->withTrashed()->find($modelId);
         if ($model) {
             $model->restore();
+
             return $model;
         }
+
         return null;
     }
 

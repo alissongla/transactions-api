@@ -16,10 +16,11 @@ class AccountRepository extends BaseRepository
     /**
      * Updates the balance of the payer and payee after a transaction.
      *
-     * @param User $payer
-     * @param User $payee
-     * @param float $value
+     * @param  User  $payer
+     * @param  User  $payee
+     * @param  float  $value
      * @return bool Returns true if the balance update was successful, false otherwise.
+     *
      * @throws \Exception If there was an error during the update process.
      */
     public function updateBalance($payer, $payee, $value): bool
@@ -41,10 +42,11 @@ class AccountRepository extends BaseRepository
     /**
      * Reverses a transaction by updating the balance of the payer and payee.
      *
-     * @param User $payer
-     * @param User $payee
-     * @param float $value
+     * @param  User  $payer
+     * @param  User  $payee
+     * @param  float  $value
      * @return bool Returns true if the balance update was successful, false otherwise.
+     *
      * @throws \Exception If there was an error during the update process.
      */
     public function reverseBalance($payer, $payee, $value)
@@ -62,5 +64,4 @@ class AccountRepository extends BaseRepository
             return false;
         }
     }
-
 }

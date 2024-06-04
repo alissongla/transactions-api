@@ -23,8 +23,7 @@ class SendSuccessfulTransactionEmail implements ShouldQueue
      */
     public function __construct(
         private int $transactionId,
-    )
-    {
+    ) {
     }
 
     /**
@@ -51,6 +50,7 @@ class SendSuccessfulTransactionEmail implements ShouldQueue
                 return ResendEmail::dispatch($emailData);
             }
         }
+
         return ResendEmail::dispatch($emailData);
     }
 }

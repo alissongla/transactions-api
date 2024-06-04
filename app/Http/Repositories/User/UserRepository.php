@@ -33,5 +33,4 @@ class UserRepository extends BaseRepository
     {
         return $this->model->with('account')->find($userId);
     }
-
 }

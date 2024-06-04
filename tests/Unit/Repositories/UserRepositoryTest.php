@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tests\Unit\Repositories;
 
 use App\Http\Repositories\User\UserRepository;

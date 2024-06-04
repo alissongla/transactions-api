@@ -1,6 +1,7 @@
 <?php
-    return [
-        'url' => [
-            'util' => env('UTIL_TOOLS_API_URL'),
-        ]
-    ];
+
+return [
+    'url' => [
+        'util' => env('UTIL_TOOLS_API_URL'),
+    ],
+];
