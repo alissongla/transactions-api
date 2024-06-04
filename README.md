@@ -14,12 +14,12 @@ O projeto em questão é uma versão simplificada das transações de um banco d
 
 ## Requisitos
 
-Eu como fundador do banco, gostaria de ter um sistema que me permita realizar transações financeiras entre contas de clientes.
-Esta transação deve ter os seguintes requisitos:
+Eu como fundador do banco gostaria de ter um sistema que me permita realizar transações financeiras entre contas de clientes.
+Essa transação deve ter os seguintes requisitos:
 - Deve ter dois tipos de perfil: Cliente e Lojista.
 - O Logista deve somente receber transações.
-- O Cliente pode pagar e receber transações.
-- O saldo do cliente não pode ser menor que o valor da transação.
+- O Cliente pode fazer e receber transações.
+- O saldo do Cliente não pode ser menor que o valor da transação que ele está tentando realizar.
 
 E como requisitos não funcionais:
 - O sistema pode ser desenvolvido em linguagem ou framework de sua escolha.
@@ -37,7 +37,7 @@ E como requisitos não funcionais:
 
 ## Arquitetura
 
- - A arquitetura do projeto foi desenvolvida com base no padrão Service Repository, onde cada camada tem sua responsabilidade bem definida.
+ - A arquitetura do projeto foi desenvolvida com base no padrão Service Repository, no qual cada camada tem sua responsabilidade bem definida.
  - Diagrama de classes:
    
 ![classe_transacao_light](https://github.com/alissongla/transactions-api/assets/39539326/0aa7419b-e3a4-4cef-acab-10b9069dd2a2)
@@ -50,17 +50,17 @@ E como requisitos não funcionais:
 
 ## Como Executar
 
-- Clone o repositório
+- Clonar o repositório
 
 ```
 git clone https://github.com/alissongla/transactions-api.git
 ```
-- Entre na pasta do projeto e copie o arquivo .env.example para .env
+- Entrar na pasta do projeto e copiar o arquivo .env.example para .env
 ```
 cd transactions-api && cp .env.example .env
 ```
 
-- Atualize as variáveis de ambiente no arquivo .env
+- Atualizar as variáveis de ambiente no arquivo .env
 
 ``` 
 APP_NAME=Laravel Bank
@@ -98,7 +98,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 UTIL_TOOLS_API_URL="https://util.devi.tools/api/"
 ```
 
-- Suba os containers do projeto
+- Subir os containers do projeto
 
 ```
 docker-compose up -d
