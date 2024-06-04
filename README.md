@@ -146,8 +146,9 @@ php artisan migrate && php artisan db:seed
 | `404` | Registro pesquisado não encontrado (Not found).
 
 ## Testes
-Para executar os testes do projeto, basta rodar o comando abaixo:
+ - Para executar os testes do projeto, basta rodar o comando abaixo:
 
 ```
 php artisan test
 ```
+ - Está disponível em `docs/postman` a collection com as requisições da API.

@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "947e8a41-30f5-4ac4-a1f5-4ff5428b58c7",
+		"name": "Laravel Bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7427026"
+	},
+	"item": [
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"value\": 1.0,\r\n  \"payer\": 18,\r\n  \"payee\": 14\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8890/api/transaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8890",
+							"path": [
+								"api",
+								"transaction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8890/api/transaction/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8890",
+							"path": [
+								"api",
+								"transaction",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8890/api/transaction/restore/{id}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8890",
+							"path": [
+								"api",
+								"transaction",
+								"restore",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
